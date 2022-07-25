@@ -4,8 +4,7 @@
 ## 目錄
 1. 環境更新和準備
 2. 安裝次序
-3. 服務設定
-4. 
+3. 開機設定
 
 ## 環境更新
 ```bash
@@ -60,3 +59,9 @@ gitlab_rails['lfs_enabled'] = true
 ~ $> sudo firewall-cmd --zone=public --permanent --add-port=444/udp
 ~ $> sudo service firewalld status
 ```
+
+## 更新
+```bash
+~ $> sudo apt upgrade gitlab-ee
+```
+> 會自動關閉服務，更新，然後重啟 <br />
