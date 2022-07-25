@@ -43,3 +43,10 @@
 ~ $> sudo gitlab-ctl start
 ~ $> sudo gitlab-ctl reconfigure
 ```
+
+- 埠位
+```bash
+~ $> sudo firewall-cmd --zone=public --permanent --add-port=444/tcp
+~ $> sudo firewall-cmd --zone=public --permanent --add-port=444/udp
+~ $> sudo service firewalld status
+```
