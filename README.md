@@ -26,6 +26,10 @@
 ~ $> curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 ~ $> sudo apt update
 ~ $> sudo EXTERNAL_URL="https://gitlab.你的域名.是什麼:你的確認埠位" apt-get install gitlab-ee
+~ $> sudo cat /etc/gitlab/initial_root_password
+=========
+see the root initial ...
+=========
 ```
 
 - 設定 {確認網址、lfs 大檔案傳出支援、其他功能選擇}
@@ -37,14 +41,14 @@
   ## GitLab settings
   gitlab:
     ## Web server settings (note: host is the FQDN, do not include http://)
-    host: gitlab-zoe.tpigame.com
-    port: 444
+    host: Domain.name.address
+    port: Port
     https: true
 ...
 ======
 ~ $> sudo vim /etc/gitlab/gitlab.rb
 ======
-external_url 'https://gitlab-zoe.tpigame.com:444'
+external_url 'https://Domain.name.address:Port'
 
 ### Git LFS
 gitlab_rails['lfs_enabled'] = true
@@ -57,6 +61,9 @@ gitlab_rails['lfs_enabled'] = true
 ```bash
 ~ $> sudo firewall-cmd --zone=public --permanent --add-port=444/tcp
 ~ $> sudo firewall-cmd --zone=public --permanent --add-port=444/udp
+~ $> sudo firewall-cmd --zone=public --permanent --add-port=80/tcp
+~ $> sudo firewall-cmd --zone=public --permanent --add-port=80/udp
+~ $> sudo firewall-cmd --reload
 ~ $> sudo service firewalld status
 ```
 
