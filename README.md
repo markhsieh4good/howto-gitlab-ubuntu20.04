@@ -34,11 +34,21 @@
 ~ $> sudo gitlab-ctl stop
 ~ $> sudo vim /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml
 ======
-
+...
+  ## GitLab settings
+  gitlab:
+    ## Web server settings (note: host is the FQDN, do not include http://)
+    host: gitlab-zoe.tpigame.com
+    port: 444
+    https: true
+...
 ======
 ~ $> sudo vim /etc/gitlab/gitlab.rb
 ======
+external_url 'https://gitlab-zoe.tpigame.com:444'
 
+### Git LFS
+gitlab_rails['lfs_enabled'] = true
 ======
 ~ $> sudo gitlab-ctl start
 ~ $> sudo gitlab-ctl reconfigure
