@@ -11,7 +11,7 @@
 ```bash
 ~ $> sudo apt update -y
 ~ $> sudo apt upgrade -y
-~ $> sudo apt install -y curl openssh-server ca-certificates tzdata perl 
+~ $> sudo apt install -y curl openssh-server ca-certificates tzdata perl vim
 ~ $> sudo apt install -y postfix
 ```
 
@@ -22,9 +22,24 @@
 ## 安裝次序
 <a href="https://about.gitlab.com/install/#ubuntu" target="_blank" rel="noopener">官網說明</a>
 
+- 安裝
 ```bash
 ~ $> curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 ~ $> sudo apt update
 ~ $> sudo EXTERNAL_URL="https://gitlab.你的域名.是什麼:你的確認埠位" apt-get install gitlab-ee
 ```
 
+- 設定 {確認網址、lfs 大檔案傳出支援、其他功能選擇}
+```bash
+~ $> sudo gitlab-ctl stop
+~ $> sudo vim /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml
+======
+
+======
+~ $> sudo vim /etc/gitlab/gitlab.rb
+======
+
+======
+~ $> sudo gitlab-ctl start
+~ $> sudo gitlab-ctl reconfigure
+```
