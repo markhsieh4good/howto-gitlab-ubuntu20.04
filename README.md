@@ -32,27 +32,48 @@ see the root initial ...
 =========
 ```
 
-- 設定 {確認網址、lfs 大檔案傳出支援、其他功能選擇}
+- 設定 {確認網址、lfs 大檔案傳出支援、下降不必要功能、減輕系統負擔，其他功能選擇}
 ```bash
 ~ $> sudo gitlab-ctl stop
 ~ $> sudo vim /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml
 ======
-...
-  ## GitLab settings
-  gitlab:
-    ## Web server settings (note: host is the FQDN, do not include http://)
-    host: Domain.name.address
-    port: Port
-    https: true
-...
+## GitLab settings
+
+### Web server settings (note: host is the FQDN, do not include http://)
+host: Domain.name.address
+port: Port
+https: true
 ======
+```
+
+```bash
 ~ $> sudo vim /etc/gitlab/gitlab.rb
 ======
 external_url 'https://Domain.name.address:Port'
 
-### Git LFS
+### GitLab LFS
 gitlab_rails['lfs_enabled'] = true
+
+# Just 2 workers
+puma['worker_processes'] = 2
+
+# 10 jobs is still quite a lot
+sidekiq['max_concurrency'] = 10
+
+grafana['enable'] = false
+prometheus_monitoring['enable'] = false
+alertmanager['enable'] = false
+
+gitlab_rails['manage_backup_path'] = true
+gitlab_rails['backup_path'] = "/path/gitlab/backups"
+gitlab_rails['backup_archive_permissions'] = 0644
+gitlab_rails['backup_pg_schema'] = 'public'
+gitlab_rails['backup_keep_time'] = 604800   ## a week
 ======
+```
+
+- 重啟
+```bash
 ~ $> sudo gitlab-ctl start
 ~ $> sudo gitlab-ctl reconfigure
 ```
